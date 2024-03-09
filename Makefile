@@ -1,3 +1,5 @@
+tf-init:
+	terraform -chdir=terraform init
 tf-plan:
 	terraform -chdir=terraform plan
 tf-apply:
