@@ -1,0 +1,29 @@
+{
+  "serviceName": "{{ tfstate `output.service_name` }}-frontend-service",
+  "taskDefinition": "{{ tfstate `output.service_name` }}-frontend-task-def",
+  "launchType": "FARGATE",
+  "schedulingStrategy": "REPLICA",
+  "deploymentConfiguration": {
+    "maximumPercent": 200,
+    "minimumHealthyPercent": 100,
+    "deploymentCircuitBreaker": {
+      "enable": true,
+      "rollback": true
+    }
+  },
+  "networkConfiguration": {
+    "awsvpcConfiguration": {
+      "assignPublicIp": "ENABLED",
+      "securityGroups": [
+        "{{ tfstate `aws_security_group.ecs_task.id` }}"
+      ],
+      "subnets": [
+        "{{ tfstate `module.vpc.aws_subnet.public[0].id` }}",
+        "{{ tfstate `module.vpc.aws_subnet.public[1].id` }}"
+      ]
+    }
+  },
+  "desiredCount": 1,
+  "enableExecuteCommand": true,
+  "platformVersion": "LATEST"
+}

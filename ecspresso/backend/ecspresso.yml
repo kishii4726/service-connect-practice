@@ -1,0 +1,10 @@
+region: ap-northeast-1
+cluster: service-connect-practice-cluster
+service: service-connect-practice-backend-service
+service_definition: ecs-service-def.json
+task_definition: ecs-task-def.json
+plugins:
+  - name: tfstate
+    config:
+      path: ../../terraform/terraform.tfstate
+timeout: 15m0s
